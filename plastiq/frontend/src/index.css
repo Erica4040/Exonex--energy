@@ -1,0 +1,271 @@
+/* ===========================================================================
+   PLASTIQ DESIGN SYSTEM
+   Subject: industrial control-room for a plastic-to-fuel pyrolysis plant.
+   Vernacular: SCADA panels, plant signage, digital gauge readouts.
+
+   Color:
+     --bg-base       #14171A  deep graphite, the "panel housing"
+     --bg-surface    #1C2024  card surface, slightly lifted
+     --bg-surface-2  #232830  nested surface (table rows, inputs)
+     --border        #2A2F35  hairline border
+     --border-strong #3A4047
+     --text-primary  #EDEFF1
+     --text-secondary #9AA3AC
+     --text-tertiary #6B7480
+     --accent-oil    #E8932E  amber — pyrolysis oil, primary action color
+     --accent-oil-dim #4A3A22
+     --accent-good   #3FA89C  muted teal — suitable/good/highly-suitable
+     --accent-good-dim #1E3530
+     --accent-hazard #E2483D  red — reserved strictly for PVC/critical risk
+     --accent-hazard-dim #3A1F1D
+     --accent-warn   #D9A23B  warning amber-yellow (distinct from oil accent in usage)
+
+   Type:
+     Display: "Barlow Condensed" — plant-signage character, big KPI numbers
+     Body:    "Inter" — clean grotesk for data and prose
+     Mono:    "IBM Plex Mono" — batch codes, weights, percentages, readouts
+   =========================================================================== */
+
+:root {
+  --bg-base: #14171a;
+  --bg-surface: #1c2024;
+  --bg-surface-2: #232830;
+  --bg-surface-hover: #272d35;
+  --border: #2a2f35;
+  --border-strong: #3a4047;
+
+  --text-primary: #edeff1;
+  --text-secondary: #9aa3ac;
+  --text-tertiary: #6b7480;
+
+  --accent-oil: #e8932e;
+  --accent-oil-bright: #f5a847;
+  --accent-oil-dim: #4a3a22;
+
+  --accent-good: #3fa89c;
+  --accent-good-bright: #54c4b7;
+  --accent-good-dim: #1e3530;
+
+  --accent-hazard: #e2483d;
+  --accent-hazard-bright: #f0584c;
+  --accent-hazard-dim: #3a1f1d;
+
+  --accent-warn: #d9a23b;
+  --accent-warn-dim: #3d3322;
+
+  --accent-gas: #6b8fb5;
+  --accent-char: #8a8278;
+  --accent-wax: #c9a96e;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.24);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--accent-oil-dim);
+  color: var(--text-primary);
+}
+
+/* Scrollbar — keep it quiet, in keeping with the panel aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Visible keyboard focus — accessibility floor */
+:focus-visible {
+  outline: 2px solid var(--accent-oil);
+  outline-offset: 2px;
+}
+
+/* Reduced motion respected */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Shared utility classes ---------- */
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.label-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--text-tertiary);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent-oil);
+  border-color: var(--accent-oil);
+  color: #1a1410;
+}
+.btn-primary:hover {
+  background: var(--accent-oil-bright);
+  border-color: var(--accent-oil-bright);
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--accent-hazard);
+  color: var(--accent-hazard-bright);
+}
+.btn-danger:hover {
+  background: var(--accent-hazard-dim);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.pill-good {
+  background: var(--accent-good-dim);
+  color: var(--accent-good-bright);
+}
+.pill-warn {
+  background: var(--accent-warn-dim);
+  color: var(--accent-warn);
+}
+.pill-hazard {
+  background: var(--accent-hazard-dim);
+  color: var(--accent-hazard-bright);
+}
+.pill-neutral {
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 9px 12px;
+  font-size: 14px;
+  width: 100%;
+}
+input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-2) 25%,
+    var(--bg-surface-hover) 37%,
+    var(--bg-surface-2) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}

@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./plastiq.db
+      - SECRET_KEY=change-this-to-a-random-64-character-string-before-deploying
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost
+      - DETECTOR_BACKEND=simulated
+      - SEED_DEMO_DATA=true
+    volumes:
+      - backend_data:/app
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:
